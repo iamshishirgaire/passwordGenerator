@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import generatePassword from "./repository/generatePassword";
 import Card from "./components/card";
 function App() {
@@ -6,8 +6,11 @@ function App() {
   const [includeNum, setIncludeNum] = useState(false);
   const [includeChar, setIncludeChar] = useState(false);
   const [currentLength, setCurrentLength] = useState(6);
+  const passwordRef = useRef(null);
+  const [isCopied, setIsCopied] = useState(false);
 
   const passWordGen = useCallback(() => {
+    setIsCopied(false);
     const generatedPassword = generatePassword(
       includeNum,
       includeChar,
@@ -19,6 +22,12 @@ function App() {
   useEffect(() => {
     passWordGen();
   }, [includeNum, includeChar, currentLength, passWordGen]);
+
+  const clickButton = useCallback(() => {
+    setIsCopied(true);
+    passwordRef.current.select;
+    window.navigator.clipboard.writeText(password);
+  }, [isCopied]);
 
   return (
     <div
@@ -32,6 +41,7 @@ function App() {
       }}
     >
       <Card
+        passwordRef={passwordRef}
         includeNums={includeNum}
         includeChars={includeChar}
         currentLength={currentLength}
@@ -45,9 +55,8 @@ function App() {
         onCheckChars={() => {
           setIncludeChar(!includeChar);
         }}
-        onBtnClick={() => {
-          navigator.clipboard.writeText(password);
-        }}
+        onBtnClick={clickButton}
+        isCopied={isCopied}
       />
     </div>
   );

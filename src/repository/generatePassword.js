@@ -1,6 +1,5 @@
 export default generatePassword;
 function generatePassword(includeNum, includeChar, maxLength) {
-  console.log(includeNum, includeChar, maxLength);
   const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
   const numbers = "0123456789";

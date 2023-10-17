@@ -1,18 +1,21 @@
 import React from "react";
 
-function CustomButton({ title, onClick }) {
+function CustomButton({ title, onBtnClicked, isCopiedClicked }) {
+  console.log("isCopieddown", isCopiedClicked);
   return (
     <div>
       <button
+        onClick={() => {
+          onBtnClicked();
+        }}
         style={{
           width: "120px",
           height: "60px",
           margin: "0px 10px",
-          color: "royalblue",
-          backgroundColor: "white",
-
+          color: isCopiedClicked ? "white" : "royalblue",
+          backgroundColor: isCopiedClicked ? "royalblue" : "white",
           padding: "10px 20px",
-          border: "3px solid black",
+          border: "3px solid royalblue",
           borderRadius: "15px",
           cursor: "pointer",
           fontSize: "18px",
@@ -24,11 +27,12 @@ function CustomButton({ title, onClick }) {
           e.target.style.color = "white";
         }}
         onMouseLeave={(e) => {
-          e.target.style.backgroundColor = "white";
-          e.target.style.color = "black";
-          e.target.style.border = "3px solid black";
+          e.target.style.backgroundColor = isCopiedClicked
+            ? "royalblue"
+            : "white";
+          e.target.style.color = isCopiedClicked ? "white" : "black";
+          e.target.style.border = "3px solid royalblue";
         }}
-        onClick={onClick}
       >
         {title}
       </button>

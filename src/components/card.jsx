@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "./buttons";
-
 function Card({
+  passwordRef,
   includeNums,
   includeChars,
   currentLength,
@@ -10,7 +10,9 @@ function Card({
   password,
   onCheckChars,
   onBtnClick,
+  isCopied,
 }) {
+  console.log("isCopied", isCopied);
   return (
     <>
       <div
@@ -61,6 +63,7 @@ function Card({
         >
           <h1
             className="password"
+            ref={passwordRef}
             style={{
               backgroundColor: "lavender",
 
@@ -72,7 +75,11 @@ function Card({
           >
             {password ?? 0}
           </h1>
-          <Button title={"\u{1F4CB} Copy"} onclick={onBtnClick}></Button>
+          <Button
+            title={isCopied ? "Copied!!" : "\u{1F4CB} Copy"}
+            onBtnClicked={onBtnClick}
+            isCopiedClicked={isCopied}
+          ></Button>
         </div>
         <div
           className="secondRow"
