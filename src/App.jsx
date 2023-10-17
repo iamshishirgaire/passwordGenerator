@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import generatePassword from "./repository/generatePassword";
 import Card from "./components/card";
 function App() {
@@ -6,6 +6,19 @@ function App() {
   const [includeNum, setIncludeNum] = useState(false);
   const [includeChar, setIncludeChar] = useState(false);
   const [currentLength, setCurrentLength] = useState(6);
+
+  const passWordGen = useCallback(() => {
+    const generatedPassword = generatePassword(
+      includeNum,
+      includeChar,
+      currentLength
+    );
+    setPassword(generatedPassword);
+  }, [includeNum, includeChar, currentLength]);
+
+  useEffect(() => {
+    passWordGen();
+  }, [includeNum, includeChar, currentLength, passWordGen]);
 
   return (
     <div
@@ -24,19 +37,10 @@ function App() {
         currentLength={currentLength}
         onChangeLength={(e) => {
           setCurrentLength(e.target.value);
-          let generatedPwd = generatePassword(
-            includeNum,
-            includeChar,
-            e.target.value
-          );
-
-          setPassword(generatedPwd);
         }}
         password={password}
         onCheckNum={() => {
           setIncludeNum(!includeNum);
-          console.log(includeNum);
-          includeChar;
         }}
         onCheckChars={() => {
           setIncludeChar(!includeChar);
